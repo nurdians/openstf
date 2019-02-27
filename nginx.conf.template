@@ -65,6 +65,16 @@ http {
       proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Real-IP $remote_addr;
     }
+    
+    # Handle stf-provider@floor5.service
+    location ~ "^/d/floor5/([^/]+)/(?<port>[0-9]{5})/$" {
+      proxy_pass http://__IP_ADDRESS__PROVIDER__:$port/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Real-IP $remote_addr;
+    }
 
     location /auth/ {
       proxy_pass http://stf_auth/auth/;
